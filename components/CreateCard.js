@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Platform, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { getRandomIntNum } from "../utils/helpers";
 import { connect } from 'react-redux';
-import { addDeck, handleInitialData } from "../actions/index";
+import { addDeck } from "../actions/index";
 import * as api from '../utils/api';
 
 function SubmitBtn({ onPress, disab }) {
@@ -74,8 +73,9 @@ class CreateDeck extends React.Component {
   }
 
   //remove
-  getIniData = () => {
-    this.props.initialData()
+  getKeys = () => {
+    const keys = api.getAllKeys()
+    console.log(keys)
   }
 
 
@@ -87,7 +87,7 @@ class CreateDeck extends React.Component {
         </Text>
         <TextInput value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
         <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <SubmitBtn onPress={() => this.getIniData()} disab={this.state.deck.deckTitle === '' ? true : false} />
+        <SubmitBtn onPress={() => this.getKeys()} disab={this.state.deck.deckTitle === '' ? true : false} />
         <Text>{JSON.stringify(this.state)
         }</Text>
       </SafeAreaView>
@@ -122,8 +122,7 @@ const styles = StyleSheet.create({
 
 
 const mapDispatchToProps = dispatch => ({
-  addNewDeck: (deck) => dispatch(addDeck(deck)),
-  initialData: () => dispatch(handleInitialData())
+  addNewDeck: (deck) => dispatch(addDeck(deck))
 })
 
 export default connect(null, mapDispatchToProps)(CreateDeck)
