@@ -74,8 +74,8 @@ class CreateDeck extends React.Component {
   }
 
   //remove
-  getIniData = () => {
-    this.props.initialData()
+  clear = () => {
+    api.clearAll()
   }
 
 
@@ -87,7 +87,7 @@ class CreateDeck extends React.Component {
         </Text>
         <TextInput value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
         <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <SubmitBtn onPress={() => this.getIniData()} disab={this.state.deck.deckTitle === '' ? true : false} />
+        <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
         <Text>{JSON.stringify(this.state)
         }</Text>
       </SafeAreaView>

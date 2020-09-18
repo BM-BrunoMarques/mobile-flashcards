@@ -14,10 +14,10 @@ export const addDeck = (deck) => dispatch => {
 }
 
 export const handleInitialData = () => dispatch => {
-  api.getInitialData().then(iniData => {
+  api.getInitialData().then(allDecks => {
     dispatch({
       type: INITIAL_DATA,
-      iniData
+      allDecks
     })
   })
 } 

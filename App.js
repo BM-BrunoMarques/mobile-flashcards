@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers'
 import middleware from './middleware'
-import CreateDeck from "./components/CreateDeck";
+import Main from "./components/Main";
 
 const store = createStore(reducer, middleware)
 
@@ -14,7 +14,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <CreateDeck / >
+          <Main / >
         </View>
       </Provider>
     )
@@ -25,7 +25,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
