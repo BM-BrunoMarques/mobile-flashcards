@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
@@ -6,9 +6,11 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
 const showAnswer = 'showAnswer'
 const Correct = 'Correct'
 const Incorrect = 'Incorrect'
+const GoBack = 'GoBack'
+const mRestart = 'Restart'
 
-
-function SubmitBtn({ onPress, Text }) {
+function QuizzBtn({ onPress, Text }) {
+  { console.log(onPress) }
   return (
     <TouchableOpacity
       onPress={onPress}>
@@ -20,32 +22,32 @@ function SubmitBtn({ onPress, Text }) {
 }
 
 class Quiz extends React.Component {
-
   state = {
-    QuizProcessing: true,
     count: 0,
     totalCorrect: 0,
     showAnswer: false,
   }
 
   handleAnswer = (answer) => {
-    const { deckCards } = this.props
-    const { count } = this.state
+    console.log('ANS', answer)
 
-    const savedAnswer = deckCards[count].answer
-
-    const userAnswer = (savedAnswer === answer)
-
-
-    if (answer === showAnswer) {
-      return this.setState({ showAnswer: true })
-    } else {
-
-      return this.handleState(userAnswer)
+    switch (answer) {
+      case mRestart:
+        return this.setState({ count: 0, totalCorrect: 0 })
+        break;
+      case showAnswer:
+        return this.setState({ showAnswer: true })
+        break;
+      default:
+        const { deckCards } = this.props
+        const { count } = this.state
+        const savedAnswer = deckCards[count].answer
+        const userAnswer = (savedAnswer === answer)
+        return this.handleQState(userAnswer)
     }
   }
 
-  handleState = (userAnswer) => (
+  handleQState = (userAnswer) => (
     this.setState({
       count: this.state.count + 1,
       totalCorrect: userAnswer
@@ -56,44 +58,32 @@ class Quiz extends React.Component {
   )
 
   //Quiz Render
-
   quizRender = () => {
-
     const { deckCards } = this.props
     const { count } = this.state
-
     return (
       <View>
         <Text>{deckCards[count].question}</Text>
         <Text>
           {this.state.showAnswer
-            ? deckCards[count].answer ? Correct : Incorrect
-            : null}
+            ? deckCards[count].answer ?  Correct : Incorrect
+            : ' '}
         </Text>
-        <SubmitBtn Text={showAnswer} onPress={() => this.handleAnswer(showAnswer)} />
-        <SubmitBtn Text={Correct} onPress={() => this.handleAnswer(true)} />
-        <SubmitBtn Text={Incorrect} onPress={() => this.handleAnswer(false)} />
+        <QuizzBtn Text={showAnswer} onPress={() => this.handleAnswer(showAnswer)} />
+        <QuizzBtn Text={Correct} onPress={() => this.handleAnswer(true)} />
+        <QuizzBtn Text={Incorrect} onPress={() => this.handleAnswer(false)} />
       </View>
     )
   }
-
   //Results Render
-
   resultsRender = () => {
-
     const { count, totalCorrect } = this.state
-
     return (
       <View>
-        <Text>{deckCards[count].question}</Text>
-        <Text>
-          {this.state.showAnswer
-            ? deckCards[count].answer ? Correct : Incorrect
-            : null}
-        </Text>
-        <SubmitBtn Text={showAnswer} onPress={() => this.handleAnswer(showAnswer)} />
-        <SubmitBtn Text={Correct} onPress={() => this.handleAnswer(true)} />
-        <SubmitBtn Text={Incorrect} onPress={() => this.handleAnswer(false)} />
+        <Text>The End!</Text>
+        <Text>Results: {totalCorrect} / {count}</Text>
+        <QuizzBtn Text={GoBack} onPress={() => this.props.navigation.goBack()} />
+        <QuizzBtn Text={mRestart} onPress={() => this.handleAnswer(mRestart)} />
       </View>
     )
   }
@@ -101,18 +91,19 @@ class Quiz extends React.Component {
   render() {
     const { deckId, deckTitle, deckCards, deck } = this.props
     const { QuizProcessing, quizNum } = this.state
-
     return (
       <View style={{ flex: 1 }}>
+        <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
+          <FontAwesome name="arrow-left" size={30} />
+        </TouchableOpacity>
         <View>
           {
             this.state.count < deckCards.length
-              ? this.QuizRender()
-              : <Text>bz</Text>
+              ? this.quizRender()
+              : this.resultsRender()
           }
         </View>
       </View>
-
     )
   }
 }
