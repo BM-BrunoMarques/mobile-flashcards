@@ -9,13 +9,13 @@ const Incorrect = 'Incorrect'
 const GoBack = 'GoBack'
 const mRestart = 'Restart'
 
-function QuizzBtn({ onPress, Text }) {
+function QuizzBtn({ onPress, Texto }) {
   { console.log(onPress) }
   return (
     <TouchableOpacity
       onPress={onPress}>
       <Text>
-        {Text}
+        {Texto}
       </Text>
     </TouchableOpacity>
   )
@@ -66,12 +66,12 @@ class Quiz extends React.Component {
         <Text>{deckCards[count].question}</Text>
         <Text>
           {this.state.showAnswer
-            ? deckCards[count].answer ?  Correct : Incorrect
+            ? deckCards[count].answer ? Correct : Incorrect
             : ' '}
         </Text>
-        <QuizzBtn Text={showAnswer} onPress={() => this.handleAnswer(showAnswer)} />
-        <QuizzBtn Text={Correct} onPress={() => this.handleAnswer(true)} />
-        <QuizzBtn Text={Incorrect} onPress={() => this.handleAnswer(false)} />
+        <QuizzBtn Texto={showAnswer} onPress={() => this.handleAnswer(showAnswer)} />
+        <QuizzBtn Texto={Correct} onPress={() => this.handleAnswer(true)} />
+        <QuizzBtn Texto={Incorrect} onPress={() => this.handleAnswer(false)} />
       </View>
     )
   }
@@ -82,8 +82,8 @@ class Quiz extends React.Component {
       <View>
         <Text>The End!</Text>
         <Text>Results: {totalCorrect} / {count}</Text>
-        <QuizzBtn Text={GoBack} onPress={() => this.props.navigation.goBack()} />
-        <QuizzBtn Text={mRestart} onPress={() => this.handleAnswer(mRestart)} />
+        <QuizzBtn Texto={GoBack} onPress={() => this.props.navigation.goBack()} />
+        <QuizzBtn Texto={mRestart} onPress={() => this.handleAnswer(mRestart)} />
       </View>
     )
   }

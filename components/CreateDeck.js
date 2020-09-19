@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { getRandomIntNum } from "../utils/helpers"
 import { connect } from 'react-redux'
 import { addDeck, handleInitialData } from "../actions/index"
 import { black, darkPurple, lightPurple, white, gray } from "../utils/colors"
-import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome'
-
-
 
 import * as api from '../utils/api'
 
@@ -93,7 +90,8 @@ class CreateDeck extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+
+      <View>
         <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
           <FontAwesome name="arrow-left" size={30} />
         </TouchableOpacity>
@@ -101,13 +99,13 @@ class CreateDeck extends React.Component {
           <Text style={{ textAlign: 'center', fontSize: 30, marginBottom: 30 }}>
             Add Deck
           </Text>
-          <View style={{ justifyContent: 'start', alignItems: 'center' }}>
+          <View>
             <TextInput placeholder='insert title' value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
             <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
             <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     )
   }
 }
@@ -123,6 +121,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: '#ededed',
+    alignSelf: 'center'
   },
   submitBtn: {
     padding: 10,

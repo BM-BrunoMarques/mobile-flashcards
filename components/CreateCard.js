@@ -79,7 +79,7 @@ class CreateaCard extends React.Component {
         <Text style={{ fontSize: 30, marginBottom: 30, marginTop: 45, textAlign: 'center' }}>
           Card Question:
         </Text>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView behavior='padding' vstyle={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: "flex-start", marginTop: 35, }}>
             <TextInput
               placeholder='Question:'
@@ -88,7 +88,7 @@ class CreateaCard extends React.Component {
               style={styles.TextInput}
             />
             <View style={{ flexDirection: 'row', marginTop: 15, width: 290, justifyContent: 'space-between', flex: 1 }}>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', height:40}}>
                 <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#FF0000', color: '#FF0000', borderRadius: 3, marginTop: 7, marginRight: 4 }}>FALSE</Text>
                 <Switch
                   trackColor={{ true: '#a3d3cf', false: '#FF0000' }}

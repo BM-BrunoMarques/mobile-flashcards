@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Deck: {
-    textAlign: 'center',
-    shadowColor: 'rgba(0,0,0,0.24)',
     paddingBottom: 40,
     paddingTop: 40,
     width: 300,
