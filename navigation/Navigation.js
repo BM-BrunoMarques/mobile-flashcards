@@ -2,10 +2,9 @@ import BottomNav from "./BottomNav"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import CreateDeck from "./CreateDeck"
-import DeckDetails from "./DeckDetails"
-import CreateCard from "./CreateCard"
-import Quiz from "./Quiz"
+import DeckDetails from "../components/DeckDetails"
+import CreateCard from "../components/CreateCard"
+import Quiz from "../components/Quiz"
 
 const Stack = createStackNavigator()
 

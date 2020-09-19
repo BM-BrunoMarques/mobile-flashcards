@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Switch, View, Platform } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Switch, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { addCard } from "../actions/index";
@@ -26,7 +26,7 @@ function SubmitBtn({ onPress, disab }) {
   )
 }
 
-class CreateaCard extends React.Component {
+class CreateCard extends React.Component {
   state = {
     question: '',
     answer: true,
@@ -71,16 +71,15 @@ class CreateaCard extends React.Component {
 
 
     return (
-      <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView style={{flex:1}} behavior='heigth'>
         <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
           <FontAwesome name="arrow-left" size={30} />
         </TouchableOpacity>
 
-        <Text style={{ fontSize: 30, marginBottom: 30, marginTop: 45, textAlign: 'center' }}>
+        <Text style={{flex:1, fontSize: 30, marginBottom: 30, marginTop: 30, textAlign: 'center' }}>
           Card Question:
         </Text>
-        <SafeAreaView behavior='padding' vstyle={{ flex: 1 }}>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: "flex-start", marginTop: 35, }}>
+          <View style={{ flex: 3, alignItems: 'center', justifyContent: "flex-start", marginTop: 35, }}>
             <TextInput
               placeholder='Question:'
               value={this.state.question}
@@ -89,7 +88,7 @@ class CreateaCard extends React.Component {
             />
             <View style={{ flexDirection: 'row', marginTop: 15, width: 290, justifyContent: 'space-between', flex: 1 }}>
               <View style={{ flexDirection: 'row', height:40}}>
-                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#FF0000', color: '#FF0000', borderRadius: 3, marginTop: 7, marginRight: 4 }}>FALSE</Text>
+                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#FF0000', color: '#FF0000', borderRadius: 3, marginTop: 7, marginRight: 4 }}>Incorrect</Text>
                 <Switch
                   trackColor={{ true: '#a3d3cf', false: '#FF0000' }}
                   thumbColor={[Platform.OS == 'ios' ? '#009688' : (isEnabled ? '#009688' : '#FF0000')]}
@@ -99,14 +98,13 @@ class CreateaCard extends React.Component {
                   style={{ margin: 6}}
                 />
 
-                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#009688', color: '#009688', borderRadius: 3, marginTop: 7, marginLeft: 4 }}>TRUE</Text>
+                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#009688', color: '#009688', borderRadius: 3, marginTop: 7, marginLeft: 4 }}>Correct</Text>
               </View>
 
               <SubmitBtn onPress={() => this.handleSubmit()} disab={disabled} />
             </View>
           </View>
-        </SafeAreaView>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -125,7 +123,6 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     padding: 10,
-    marginTop: 65,
     borderWidth: 1,
     borderColor: black,
     backgroundColor: darkPurple,
@@ -172,4 +169,4 @@ const mapDispatchToProps = dispatch => ({
   initialData: () => dispatch(handleInitialData())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateaCard)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCard)

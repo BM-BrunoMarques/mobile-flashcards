@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
 
 // IF I ACCESS THIS.PROPS
@@ -8,7 +8,7 @@ class Home extends React.Component {
     const Decks = this.props.allDecks
     return (
       <View style={styles.container}>
-        <Text style={styles.pageTitle}>Your Decks</Text>
+        <Text style={styles.pageTitle}>{Decks ? 'Your Decks' : 'You don\'t have any decks'} </Text>
         <ScrollView contentContainerStyle={styles.contentContainer} style={styles.ScrollView}>
           {Decks
             ? Object.keys(Decks).map((K) => {

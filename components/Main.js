@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import CreateDeck from "./CreateDeck";
 import { connect } from 'react-redux';
 import { handleInitialData } from "../actions/index";
-import Navigation from './Navigation';
+import Navigation from '../navigation/Navigation';
 
 class Main extends React.Component {
   state = {

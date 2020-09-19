@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { getRandomIntNum } from "../utils/helpers"
 import { connect } from 'react-redux'
@@ -91,12 +91,12 @@ class CreateDeck extends React.Component {
   render() {
     return (
 
-      <View>
+      <KeyboardAvoidingView style={{flex:1}} behavior='heigth'>
         <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
           <FontAwesome name="arrow-left" size={30} />
         </TouchableOpacity>
-        <View style={{ flex: 1, marginTop: 150, }}>
-          <Text style={{ textAlign: 'center', fontSize: 30, marginBottom: 30 }}>
+        <View style={{ flex: 1}}>
+          <Text style={{ textAlign: 'center', fontSize: 30, marginTop: 30, marginBottom: 30 }}>
             Add Deck
           </Text>
           <View>
@@ -105,7 +105,7 @@ class CreateDeck extends React.Component {
             <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

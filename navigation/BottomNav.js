@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import React from "react";
-import Home from "./Home";
-import CreateDeck  from "./CreateDeck";
+import Home from "../components/Home";
+import CreateDeck  from "../components/CreateDeck";
 import { Feather } from "@expo/vector-icons";
 import { darkPurple, white, lightPurple } from '../utils/colors'
 
