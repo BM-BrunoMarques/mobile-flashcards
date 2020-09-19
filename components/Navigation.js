@@ -1,10 +1,12 @@
-import BottomNav from "./BottomNav";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
-import CreateDeck from "./CreateDeck";
+import BottomNav from "./BottomNav"
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+import React from "react"
+import CreateDeck from "./CreateDeck"
+import DeckDetails from "./DeckDetails"
+import CreateCard from "./CreateCard"
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 const Navigation = () => {
   return (
@@ -19,8 +21,8 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="deck"
-          component={CreateDeck}
+          name="deckDetails"
+          component={DeckDetails}
           options={{
             animationEnabled: true,
             headerShown: false,
@@ -36,7 +38,7 @@ const Navigation = () => {
         />
         <Stack.Screen
           name="addcard"
-          component={CreateDeck}
+          component={CreateCard}
           options={{
             animationEnabled: true,
             headerShown: false,
@@ -44,7 +46,7 @@ const Navigation = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation

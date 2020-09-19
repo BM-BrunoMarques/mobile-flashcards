@@ -10,13 +10,18 @@ export function addDeck(deck) {
 }
 
 export function addCard(deckId, card) {
+  console.log(deckId)
+  const oDeckId = deckId
+  const oCard = card
   return AsyncStorage.getItem(FLASH_STORAGE_KEY)
     .then((stringDecks => {
-      let parseDecks = JSON.parse(stringifiedDecks)
-      let deckKeys = Object.keys(parseDecks)
+      let parseDecks = JSON.parse(stringDecks)
+      console.log(parseDecks)
+      let allDecks = parseDecks
 
-      deckKeys[key].questions.push(card)
-      console.log(deckKeys)
+      allDecks[oDeckId].cards.push(oCard)
+      
+      return AsyncStorage.mergeItem(FLASH_STORAGE_KEY, JSON.stringify(allDecks))
 
     }))
 }

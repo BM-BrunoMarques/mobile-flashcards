@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Switch, View, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { addDeck } from "../actions/index";
-import * as api from '../utils/api';
+import { addCard } from "../actions/index";
+import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
+import { black, darkPurple, gray, lightPurple, white } from "../utils/colors";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SubmitBtn({ onPress, disab }) {
   return (
@@ -13,84 +15,98 @@ function SubmitBtn({ onPress, disab }) {
       style={disab === true
         ? [styles.submitBtn, styles.submitBtnDisabled]
         : styles.submitBtn}>
-      <Text>ADD DECK</Text>
+      <Text
+        style={disab === true
+          ? [styles.submitTxt, styles.submitTxtDisabled]
+          : styles.submitTxt}
+      >
+        Submit
+      </Text>
     </TouchableOpacity>
   )
 }
 
-class CreateDeck extends React.Component {
+class CreateaCard extends React.Component {
   state = {
-    deck: {
-      deckId: '',
-      deckTitle: '',
-      cards: []
-    }
+    question: '',
+    answer: true,
+    deckId: ''
   }
 
-  inputChange = (value) => {
-    this.setState(state => ({
-      ...state,
-      deck: {
-        ...state.deck,
-        deckTitle: value
-      }
-    }))
+  componentDidMount() {
+    this.setState({
+      deckId: this.props.deckId
+    })
+  }
+
+  inputChange = (value, name) => {
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit = () => {
-    const deckId = this.state.deck.deckTitle + getRandomIntNum()
 
-    setTimeout(() => {
-      this.setState(state => ({
-        ...state,
-        deck: {
-          ...state.deck,
-          deckId: deckId
-        }
-      }))
-    }, 30)
+    const { question, answer, deckId } = this.state
+    const newCard = { question, answer }
 
-    setTimeout(() => {
-      const newDeck = {...this.state.deck}
-      this.props.addNewDeck(newDeck)
-    }, 50)
-
-
-
-
-    this.cleanDeckState()
+    this.props.addNewCard(deckId, newCard)
+    this.cleanCardState()
   }
 
-  cleanDeckState = () => {
+  cleanCardState = () => {
     setTimeout(() => {
-      const cleanDeck = { ...this.state.deck }
-      cleanDeck.deckTitle = ''
-      cleanDeck.deckId = ''
       this.setState({
-        deck: cleanDeck
+        question: '',
+        answer: true,
       })
-    }, 300)
+    }, 200)
   }
-
-  //remove
-  getKeys = () => {
-    const keys = api.getAllKeys()
-    console.log(keys)
-  }
-
 
   render() {
+    const { question, answer } = this.state
+    let disabled = [question, answer].includes('')
+
+    const isEnabled = this.state.answer
+
+
     return (
-      <SafeAreaView behavior='padding' style={styles.container}>
-        <Text style={{ fontSize: 30 }}>
-          Deck Title
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
+          <FontAwesome name="arrow-left" size={30} />
+        </TouchableOpacity>
+
+        <Text style={{ fontSize: 30, marginBottom: 30, marginTop: 45, textAlign: 'center' }}>
+          Card Question:
         </Text>
-        <TextInput value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
-        <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <SubmitBtn onPress={() => this.getKeys()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <Text>{JSON.stringify(this.state)
-        }</Text>
-      </SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: "flex-start", marginTop: 35, }}>
+            <TextInput
+              placeholder='Question:'
+              value={this.state.question}
+              onChangeText={(value) => this.inputChange(value, 'question')}
+              style={styles.TextInput}
+            />
+            <View style={{ flexDirection: 'row', marginTop: 15, width: 290, justifyContent: 'space-between', flex: 1 }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#FF0000', color: '#FF0000', borderRadius: 3, marginTop: 7, marginRight: 4 }}>FALSE</Text>
+                <Switch
+                  trackColor={{ true: '#a3d3cf', false: '#FF0000' }}
+                  thumbColor={[Platform.OS == 'ios' ? '#009688' : (isEnabled ? '#009688' : '#FF0000')]}
+                  ios_backgroundColor="#fbfbfb"
+                  onValueChange={(value) => this.inputChange(value, 'answer')}
+                  value={this.state.answer}
+                  style={{ margin: 6}}
+                />
+
+                <Text style={{ height: 29, borderWidth: 1, fontSize: 11, fontWeight: 'bold', padding: 8, borderColor: '#009688', color: '#009688', borderRadius: 3, marginTop: 7, marginLeft: 4 }}>TRUE</Text>
+              </View>
+
+              <SubmitBtn onPress={() => this.handleSubmit()} disab={disabled} />
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
     )
   }
 }
@@ -98,8 +114,6 @@ class CreateDeck extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   TextInput: {
     height: 50,
@@ -111,18 +125,51 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     padding: 10,
-    marginTop: 10,
+    marginTop: 65,
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: black,
+    backgroundColor: darkPurple,
+    borderRadius: 5,
+    width: 92,
+    alignSelf: 'flex-start',
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: black
   },
   submitBtnDisabled: {
-    backgroundColor: '#ff0000',
-  }
+    backgroundColor: lightPurple,
+  },
+
+  submitTxt: {
+    color: white,
+  },
+  submitTxtDisabled: {
+    color: gray,
+  },
+
+  BackBtn: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: '#FFF',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+  },
 })
 
+
+function mapStateToProps(state, props) {
+  const { deckId } = props.route.params
+
+  return {
+    deckId: deckId,
+  }
+
+}
 
 const mapDispatchToProps = dispatch => ({
-  addNewDeck: (deck) => dispatch(addDeck(deck))
+  addNewCard: (deckId, newCard) => dispatch(addCard(deckId, newCard)),
+  initialData: () => dispatch(handleInitialData())
 })
 
-export default connect(null, mapDispatchToProps)(CreateDeck)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateaCard)

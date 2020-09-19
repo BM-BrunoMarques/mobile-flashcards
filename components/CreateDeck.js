@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Platform, SafeAreaView } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { getRandomIntNum } from "../utils/helpers";
-import { connect } from 'react-redux';
-import { addDeck, handleInitialData } from "../actions/index";
-import * as api from '../utils/api';
+import React, { Component } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { TextInput } from 'react-native-gesture-handler'
+import { getRandomIntNum } from "../utils/helpers"
+import { connect } from 'react-redux'
+import { addDeck, handleInitialData } from "../actions/index"
+import { black, darkPurple, lightPurple, white, gray } from "../utils/colors"
+import { SafeAreaView } from 'react-native-safe-area-context'
+import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome'
+
+
+
+import * as api from '../utils/api'
 
 function SubmitBtn({ onPress, disab }) {
   return (
@@ -14,7 +20,13 @@ function SubmitBtn({ onPress, disab }) {
       style={disab === true
         ? [styles.submitBtn, styles.submitBtnDisabled]
         : styles.submitBtn}>
-      <Text>ADD DECK</Text>
+      <Text
+        style={disab === true
+          ? [styles.submitTxt, styles.submitTxtDisabled]
+          : styles.submitTxt}
+      >
+        Submit
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -52,7 +64,7 @@ class CreateDeck extends React.Component {
     }, 30)
 
     setTimeout(() => {
-      const newDeck = {...this.state.deck}
+      const newDeck = { ...this.state.deck }
       this.props.addNewDeck(newDeck)
     }, 50)
 
@@ -81,15 +93,20 @@ class CreateDeck extends React.Component {
 
   render() {
     return (
-      <SafeAreaView behavior='padding' style={styles.container}>
-        <Text style={{ fontSize: 30 }}>
-          Deck Title
-        </Text>
-        <TextInput value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
-        <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
-        <Text>{JSON.stringify(this.state)
-        }</Text>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
+          <FontAwesome name="arrow-left" size={30} />
+        </TouchableOpacity>
+        <View style={{ flex: 1, marginTop: 150, }}>
+          <Text style={{ textAlign: 'center', fontSize: 30, marginBottom: 30 }}>
+            Add Deck
+          </Text>
+          <View style={{ justifyContent: 'start', alignItems: 'center' }}>
+            <TextInput placeholder='insert title' value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
+            <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
+            <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
+          </View>
+        </View>
       </SafeAreaView>
     )
   }
@@ -98,8 +115,6 @@ class CreateDeck extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   TextInput: {
     height: 50,
@@ -113,11 +128,34 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: black,
+    backgroundColor: darkPurple,
+    borderRadius: 5,
+    width: 92,
+    alignSelf: 'center',
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: black
   },
   submitBtnDisabled: {
-    backgroundColor: '#ff0000',
-  }
+    backgroundColor: lightPurple,
+  },
+
+  submitTxt: {
+    color: white,
+  },
+  submitTxtDisabled: {
+    color: gray,
+  },
+
+  BackBtn: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: '#FFF',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+  },
 })
 
 

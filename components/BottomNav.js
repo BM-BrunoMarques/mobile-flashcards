@@ -3,6 +3,7 @@ import React from "react";
 import Home from "./Home";
 import CreateDeck  from "./CreateDeck";
 import { Feather } from "@expo/vector-icons";
+import { darkPurple, white, lightPurple } from '../utils/colors'
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -10,15 +11,19 @@ const Tab = createMaterialBottomTabNavigator();
 export default function Navigation() {
   return (
     <Tab.Navigator
-      activeColor='#000000'
-      inactiveColor='#000000'
-      barStyle={{ backgroundColor: '#ff0000' }}
+
+      barStyle={{ backgroundColor: darkPurple }}
+      tabBarOptions={{
+        activeTintColor: white,
+        inactiveTintColor: lightPurple,
+      }}
     >
       <Tab.Screen
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
-            <Feather name="home" color='#000000' size={24} />
+          animationEnabled: true,
+          tabBarIcon: ({color}) => (
+            <Feather name="home" color={color} size={25} />
           ),
         }}
         name="decklist"
@@ -27,8 +32,9 @@ export default function Navigation() {
       <Tab.Screen
         options={{
           tabBarLabel: "Add Deck",
+          animationEnabled: true,
           tabBarIcon: ({ color }) => (
-            <Feather name="home" color='#000000' size={24} />
+            <Feather name="folder-plus" color={color} size={24} />
           ),
         }}
         name="adddeck"

@@ -1,6 +1,7 @@
 import * as api from '../utils/api';
 
 export const ADD_DECK = "ADD_DECK";
+export const ADD_CARD = "ADD_CARD";
 export const INITIAL_DATA = "INITIAL_DATA";
 
 
@@ -13,15 +14,6 @@ export const addDeck = (deck) => dispatch => {
 }).catch(err => console.log(err))
 }
 
-export const handleInitialData = () => dispatch => {
-  api.getInitialData().then(allDecks => {
-    dispatch({
-      type: INITIAL_DATA,
-      allDecks
-    })
-  })
-} 
-
 export const addCard = (deckId,card) => dispatch => {
   api.addCard(deckId,card).then(() => {
     dispatch({
@@ -31,3 +23,12 @@ export const addCard = (deckId,card) => dispatch => {
     })
   }).catch(err => console.log(err))
 }
+
+export const handleInitialData = () => dispatch => {
+  api.getInitialData().then(allDecks => {
+    dispatch({
+      type: INITIAL_DATA,
+      allDecks
+    })
+  })
+} 
