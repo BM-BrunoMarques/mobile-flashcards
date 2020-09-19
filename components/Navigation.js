@@ -5,6 +5,7 @@ import React from "react"
 import CreateDeck from "./CreateDeck"
 import DeckDetails from "./DeckDetails"
 import CreateCard from "./CreateCard"
+import Quiz from "./Quiz"
 
 const Stack = createStackNavigator()
 
@@ -30,7 +31,7 @@ const Navigation = () => {
         />
         <Stack.Screen
           name="quiz"
-          component={CreateDeck}
+          component={Quiz}
           options={{
             animationEnabled: true,
             headerShown: false,

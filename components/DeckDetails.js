@@ -7,7 +7,7 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
 class DeckDetails extends React.Component {
   render() {
     const { deckId, deckTitle, deckCards, cards } = this.props
-    console.log('PROPSSS',this.props)
+    console.log('PROPSSS', this.props)
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.BackBtn} onPress={() => this.props.navigation.goBack()}>
@@ -28,7 +28,14 @@ class DeckDetails extends React.Component {
               : null
             }
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.NavBtn}><Text style={{ textAlign: "center" }}>Start Quizz</Text></TouchableOpacity>
+              <TouchableOpacity
+                disabled={!deckCards.length > 0}
+                onPress={() => this.props.navigation.navigate('quiz', { deckId: deckId })}
+                style={styles.NavBtn}
+              >
+                <Text style={{ textAlign: "center" }}>Start Quiz</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('addcard', { deckId: deckId })}
                 style={styles.NavBtn}
@@ -98,7 +105,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state, props) {
 
   const { deck } = props.route.params
-  const {cards} = state.allDecks[deck.deckId]
+  const { cards } = state.allDecks[deck.deckId]
 
   // this will handle non loaded decks
   if (deck) {
