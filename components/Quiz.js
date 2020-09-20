@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Platform, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
-import { red, lightRed, lightGreen, darkGray } from "../utils/colors";
+import { red, lightRed, lightGreen, gray, darkGray } from "../utils/colors";
 
 // here you can change the default texts for Quiz page 
 const showAnswer = 'Show Answer'
@@ -75,8 +75,8 @@ class Quiz extends React.Component {
 
     return (
       <View>
-        <Text style={styles.Question}>{deckCards[count].question}</Text>
-
+          <Text style={{ textAlign: 'center', fontSize: 18, color: darkGray, marginTop: 39 }}>({count + 1} / {deckCards.length})</Text>
+          <Text style={styles.Question}>{deckCards[count].question}</Text>
         {this.state.showAnswer
           ? deckCards[count].answer ? this.showCorrectAnswer() : this.showIncorrectAnswer()
           : null}
@@ -97,19 +97,20 @@ class Quiz extends React.Component {
     const { count, totalCorrect } = this.state
     return (
       <View>
-        <Text style={styles.Question}>The End!</Text>
-        <View style={{ borderWidth: 1, borderColor: darkGray, padding: 8, borderRadius: 2, borderStyle: "dashed"}}>
+        <Text style={[styles.Question, {marginTop:65}]}>The End!</Text>
+        <View style={{ borderWidth: 1, borderColor: darkGray, padding: 8, borderRadius: 2, borderStyle: "dashed", marginTop: 10 }}>
           <Text styles={{ fontSize: 19 }}>You answered correctly: </Text>
           <Text style={{ textAlign: "center", fontSize: 19 }}> <Text style={styles.ResultNum}>{totalCorrect}</Text> out of <Text style={styles.ResultNum}>{count}</Text></Text>
         </View>
-        <View style={{ marginTop: 10}}>
-        <QuizzBtn Texto={GoBack} styl={styles.GoBack} onPress={() => this.props.navigation.goBack()} />
-        <QuizzBtn Texto={mRestart} styl={styles.mRestart} onPress={() => this.handleAnswer(mRestart)} />
+        <View style={{ marginTop: 15 }}>
+          <QuizzBtn Texto={mRestart} styl={styles.mRestart} onPress={() => this.handleAnswer(mRestart)} />
+          <QuizzBtn Texto={GoBack} styl={styles.GoBack} onPress={() => this.props.navigation.goBack()} />
         </View>
       </View>
     )
   }
 
+  // React Component Class Quiz Render here:
   render() {
     const { deckId, deckTitle, deckCards, deck } = this.props
     const { QuizProcessing, quizNum } = this.state
@@ -148,9 +149,10 @@ const styles = StyleSheet.create({
   },
   Question: {
     textAlign: 'center',
-    marginTop: 45,
+    marginTop: 6,
     fontSize: 32,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginRight: 10,
   },
   /**Button styles**/
   showAnswer: {
@@ -202,10 +204,18 @@ const styles = StyleSheet.create({
   GoBack: {
     color: red,
     fontSize: 30,
+    marginTop:30,
+    borderWidth: 1,
+    width: 130,
+    textAlign:"center",
+    borderRadius:4,
+    padding: 3
   },
   mRestart: {
     color: red,
-    fontSize: 30,
+    fontSize: 20,
+    textAlign: 'center',
+    textDecorationLine: "underline",
   },
   ResultNum: {
     fontSize: 21,

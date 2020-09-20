@@ -7,7 +7,7 @@ import { addDeck, handleInitialData } from "../actions/index"
 import { black, darkPurple, lightPurple, white, gray } from "../utils/colors"
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome'
 
-import * as api from '../utils/api'
+// import * as api from '../utils/api'
 
 function SubmitBtn({ onPress, disab }) {
   return (
@@ -65,9 +65,6 @@ class CreateDeck extends React.Component {
       this.props.addNewDeck(newDeck)
     }, 50)
 
-
-
-
     this.cleanDeckState()
   }
 
@@ -82,11 +79,10 @@ class CreateDeck extends React.Component {
     }, 300)
   }
 
-  //remove
-  clear = () => {
-    api.clearAll()
-  }
 
+  // clear = () => {
+  //   api.clearAll()
+  // }
 
   render() {
     return (
@@ -102,7 +98,7 @@ class CreateDeck extends React.Component {
           <View>
             <TextInput placeholder='insert title' value={this.state.deck.deckTitle} onChangeText={(value) => this.inputChange(value)} style={styles.TextInput} />
             <SubmitBtn onPress={() => this.handleSubmit()} disab={this.state.deck.deckTitle === '' ? true : false} />
-            <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} />
+            {/* <SubmitBtn onPress={() => this.clear()} disab={this.state.deck.deckTitle === '' ? true : false} /> */}
           </View>
         </View>
       </KeyboardAvoidingView>

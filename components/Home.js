@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+
 
 // IF I ACCESS THIS.PROPS
 class Home extends React.Component {
   render() {
     const Decks = this.props.allDecks
+    console.log('PROPSSS', this.props)
     return (
       <View style={styles.container}>
         <Text style={styles.pageTitle}>{Decks ? 'Your Decks' : 'You don\'t have any decks'} </Text>
@@ -58,10 +60,21 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps({ allDecks }) {
-  return {
-    allDecks: allDecks
+function mapStateToProps(state, props) {
+  const { allDecks } = state
+  if (!props.route.params) {
+    return {
+      allDecks
+    }
+  } else {
+    const { deckId, deleteDeck } = props.route.params
+    return {
+      allDecks,
+      deckId,
+      deleteDeck,
+    }
   }
 }
+
 
 export default connect(mapStateToProps)(Home)

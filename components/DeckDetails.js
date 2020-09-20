@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome';
+import { deleteDeck } from "../actions/index"
+import { lightPurple, white, black, darkPurple, gray } from "../utils/colors";
 
 
 class DeckDetails extends React.Component {
+
+  state = {
+    deckDeleted: false
+  }
+
+  goBack() {
+    const { navigation, route } = this.props;
+    navigation.goBack();
+    route.params.deck({ deckTitle: 'deleteThisDeck0909012' });
+  }
+
+  handleSubmitDelete = (deckId) => {
+    this.goBack()
+  }
+
   render() {
+
     const { deckId, deckTitle, deckCards, cards } = this.props
     console.log('PROPSSS', this.props)
     return (
@@ -31,18 +49,22 @@ class DeckDetails extends React.Component {
               <TouchableOpacity
                 disabled={!deckCards.length > 0}
                 onPress={() => this.props.navigation.navigate('quiz', { deckId: deckId })}
-                style={styles.NavBtn}
+                style={ !deckCards.length > 0
+                  ? [styles.NavBtn, styles.NavDisabled ]
+                : styles.NavBtn }
               >
-                <Text style={{ textAlign: "center" }}>Start Quiz</Text>
+                <Text style={{ textAlign: "center", color: white }}>Start Quiz</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('addcard', { deckId: deckId })}
                 style={styles.NavBtn}
               >
-                <Text style={{ textAlign: "center" }}>Add Cards</Text>
+                <Text style={{ textAlign: "center", color: white }}>Add Cards</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.DelBtn}><Text style={{ color: '#FF0000', textAlign: "center" }}>Delete Deck</Text></TouchableOpacity>
+              {/* <TouchableOpacity
+                onPress={() => this.goBack()}
+                style={styles.DelBtn}><Text style={{ color: '#FF0000', textAlign: "center" }}>Delete Deck</Text></TouchableOpacity> */}
             </View>
           </View>
         </View>
@@ -87,18 +109,18 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   NavBtn: {
-    padding: 20,
     width: 200,
-    marginBottom: 15,
+    padding: 20,
     borderWidth: 1,
-    borderColor: '#000'
+    borderColor: black,
+    backgroundColor: darkPurple,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: black,
+    marginBottom: 15
   },
-  DelBtn: {
-    padding: 5,
-    fontWeight: '800',
-    marginTop: 15,
-    textDecorationLine: "underline",
-    textDecorationColor: '#FF0000'
+  NavDisabled:{
+    backgroundColor: lightPurple,
   }
 })
 
@@ -107,8 +129,8 @@ function mapStateToProps(state, props) {
   const { deck } = props.route.params
   const { cards } = state.allDecks[deck.deckId]
 
-  // this will handle non loaded decks
-  if (deck) {
+
+  if (deck && cards) {
     return {
       deck: deck,
       deckTitle: deck.deckTitle,
@@ -123,5 +145,9 @@ function mapStateToProps(state, props) {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  deleteThisDeck: (deck) => dispatch(deleteDeck(deck))
+})
 
-export default connect(mapStateToProps)(DeckDetails)
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDetails)
