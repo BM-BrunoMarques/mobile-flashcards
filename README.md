@@ -1,6 +1,8 @@
 # Mobile Flash Cards - Native App
+### ( Final exam from Udacity's React Native course )
 
-- Final exam from Udacity's React Native course.
+
+### <div style="text-align: right; font-weight: bold">  Author: Bruno Marques </div>
 
 Mobile Flash cards is an APP that allows you to create flashcards on your mobile device, you can create multiple Deck collections and inside those decks you will have two options, one to create cards and another to take a Quiz.
 <br />
