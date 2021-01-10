@@ -4,6 +4,7 @@
 ### Author: Bruno Marques
 <br />
 ### ATENTION! 
+
 **This project has taken an unusual but still valid approach as per what is required in the specification. Your reviewer may require that your 'Create a Card' view has two TEXT input fields, one for Question, another for Answer.
 On this project it was created one TEXT input field for the Question, and a SWITCH input field for the answer, which allows the user to mark their Question as 'Correct' or 'Incorrect'.
 This creates a completely different logic of setting up the questions, as they should be True or False, as well as the Quizz page, which will test your answers, instead of letting the user decide alone.**
