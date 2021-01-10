@@ -1,11 +1,19 @@
 # Mobile Flash Cards - Native App
 
+
 ### Author: Bruno Marques
+<br />
+### ATENTION! 
+**This project has taken an unusual but still valid approach as per what is required in the specification. Your reviewer may require that your 'Create a Card' view has two TEXT input fields, one for Question, another for Answer.
+On this project it was created one TEXT input field for the Question, and a SWITCH input field for the answer, which allows the user to mark their Question as 'Correct' or 'Incorrect'.
+This creates a completely different logic of setting up the questions, as they should be True or False, as well as the Quizz page, which will test your answers, instead of letting the user decide alone.**
+<br />
 
 ### ( Final exam from Udacity's React Native course )
+
 Mobile Flash cards is an APP that allows you to create flashcards on your mobile device, you can create multiple Deck collections and inside those decks you will have two options, one to create cards and another to take a Quiz.
 <br />
-You should think of cards as "Questions", they should be created in a "Correct" or "Incorrect" format, which will allow you to choose your answer accordingly in the Quiz.
+In my approach to this project you do not provide an answer. You should think of cards as "Questions", they should be created in a "Correct" or "Incorrect" format, which will allow you to choose your answer accordingly in the Quiz.
 <br />
 
 ## Insights 
