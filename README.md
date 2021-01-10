@@ -3,6 +3,7 @@
 
 ### Author: Bruno Marques
 <br />
+
 ### ATENTION! 
 
 **This project has taken an unusual but still valid approach as per what is required in the specification. Your reviewer may require that your 'Create a Card' view has two TEXT input fields, one for Question, another for Answer.
