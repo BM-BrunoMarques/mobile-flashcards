@@ -12,15 +12,15 @@ class DeckDetails extends React.Component {
     deckDeleted: false
   }
 
-  goBack() {
-    const { navigation, route } = this.props;
-    navigation.goBack();
-    route.params.deck({ deckTitle: 'deleteThisDeck0909012' });
-  }
+  // goBack() {
+  //   const { navigation, route } = this.props;
+  //   navigation.goBack();
+  //   route.params.deck({ deckTitle: 'deleteThisDeck0909012' });
+  // }
 
-  handleSubmitDelete = (deckId) => {
-    this.goBack()
-  }
+  // handleSubmitDelete = (deckId) => {
+  //   this.goBack()
+  // }
 
   render() {
 
